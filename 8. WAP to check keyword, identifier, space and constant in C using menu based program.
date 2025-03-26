@@ -1,0 +1,107 @@
+#include <stdio.h>
+int main() {
+    char input[100];  
+    printf("Enter the input string: ");
+    fgets(input, sizeof(input), stdin);  
+
+    // List of all C keywords
+    char *keywords[] = {"auto", "break", "case", "char", "const", "continue", "default", "do", 
+                        "double", "else", "enum", "extern", "float", "for", "goto", "if", "int", 
+                        "long", "register", "return", "short", "signed", "sizeof", "static", 
+                        "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"};
+
+    // Operators in C
+    char operators[] = "+-*/%=<>&|^!~";
+    
+    // Delimiters in C
+    char delimiters[] = " ,;(){}[]";
+
+    int i = 0;
+    while (input[i] != '\0') {
+        // Ignore spaces and newlines
+        if (input[i] == ' ' || input[i] == '\n') {
+            i++;
+            continue;
+        }
+
+        // Check for operators
+        int isOp = 0;
+        for (int j = 0; operators[j] != '\0'; j++) {
+            if (input[i] == operators[j]) {
+                printf("Operator: %c\n", input[i]);
+                isOp = 1;
+                break;
+            }
+        }
+        if (isOp) {
+            i++;
+            continue;
+        }
+
+        // Check for delimiters
+        int isDel = 0;
+        for (int j = 0; delimiters[j] != '\0'; j++) {
+            if (input[i] == delimiters[j]) {
+                printf("Delimiter: %c\n", input[i]);
+                isDel = 1;
+                break;
+            }
+        }
+        if (isDel) {
+            i++;
+            continue;
+        }
+
+        // Extract token (Keyword, Identifier, or Number)
+        char token[50];
+        int k = 0;
+        while (input[i] != ' ' && input[i] != '\n' && input[i] != '\0' &&
+               input[i] != '+' && input[i] != '-' && input[i] != '*' && input[i] != '/' &&
+               input[i] != '=' && input[i] != '<' && input[i] != '>' && input[i] != '!' &&
+               input[i] != '&' && input[i] != '|' && input[i] != '^' && input[i] != '~' &&
+               input[i] != ',' && input[i] != ';' && input[i] != '(' && input[i] != ')' &&
+               input[i] != '{' && input[i] != '}' && input[i] != '[' && input[i] != ']') {
+            token[k++] = input[i++];
+        }
+        token[k] = '\0';
+
+        // Check if token is a keyword
+        int isKeyword = 0;
+        for (int j = 0; j < 32; j++) {
+            int match = 1;
+            for (int m = 0; keywords[j][m] != '\0'; m++) {
+                if (token[m] != keywords[j][m]) {
+                    match = 0;
+                    break;
+                }
+            }
+            if (match && keywords[j][k] == '\0') {
+                isKeyword = 1;
+                break;
+            }
+        }
+
+        if (isKeyword) {
+            printf("Keyword: %s\n", token);
+        } 
+        else {
+            // Check if token is an integer
+            int isNumber = 1;
+            for (int j = 0; token[j] != '\0'; j++) {
+                if (token[j] < '0' || token[j] > '9') {
+                    isNumber = 0;
+                    break;
+                }
+            }
+
+            if (isNumber) {
+                printf("Integer: %s\n", token);
+            } 
+            else {
+                printf("Identifier: %s\n", token);
+            }
+        }
+    }
+
+    return 0;
+}
