@@ -1,0 +1,27 @@
+#include <stdio.h>
+int main() {
+    char code[] =
+        "#include <stdio.h>\n"
+        "int main() {\n"
+        "    int a = 10;\n"
+        "    int b = 20;\n"
+        "    int sum = a + b;\n"
+        "    printf(\"Sum = %d\\n\", sum);\n"
+        "    return 0;\n"
+        "}\n";
+
+    int i = 0, lines = 1, spaces = 0;
+
+    while (code[i] != '\0') {
+        if (code[i] == '\n') {
+            lines++;
+        } else if (code[i] == ' ') {
+            spaces++;
+        }
+        i++;
+    }
+    printf(" Number of lines in the code: %d\n", lines);
+    printf(" Number of spaces in the code: %d\n", spaces);
+
+    return 0;
+}
