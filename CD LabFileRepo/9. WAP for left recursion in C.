@@ -1,0 +1,67 @@
+#include <stdio.h>
+int main() {
+    int p, n, m, i, j;
+    char alpha[10][20], beta[10][20];
+    char prod; // For single production symbol like A, B, S
+    printf("Enter number of productions: ");
+    scanf("%d", &p); // Number of productions
+    for(j = 0; j < p; j++) {
+        printf("\nEnter the production (non-terminal) symbol (e.g., A, B, S): ");
+        scanf(" %c", &prod); // Read the non-terminal symbol
+        printf("Enter number of alpha (%cα): ", prod); // Number of alpha (left recursive)
+        scanf("%d", &n);
+        for(i = 0; i < n; i++) {
+            printf("Enter alpha %d: ", i + 1);
+            scanf("%s", alpha[i]); // Alpha parts (without production symbol)
+        }
+        printf("Enter number of beta (β): "); // Number of beta (non-left-recursive)
+        scanf("%d", &m);
+        for(i = 0; i < m; i++) {
+            printf("Enter beta %d: ", i + 1);
+            scanf("%s", beta[i]); // Beta parts
+        }
+        // If alpha is present, it means left recursion exists
+        if(n != 0) {
+            // Print original grammar
+            printf("\nOriginal Grammar: %c -> ", prod);
+            for(i = 0; i < n; i++) {
+                printf("%c%s", prod, alpha[i]); // e.g., Aα
+                if(i != n - 1 || m > 0)
+                    printf(" | ");
+            }
+            for(i = 0; i < m; i++) {
+                printf("%s", beta[i]); // beta
+                if(i != m - 1)
+                    printf(" | ");
+            }
+            // After removing left recursion
+            printf("\n\nAfter removing left recursion:\n");
+            // First line: prod -> β1 prod' | β2 prod' | ...
+            printf("%c -> ", prod);
+            for(i = 0; i < m; i++) {
+                printf("%s %c'", beta[i], prod); // beta with prod'
+                if(i != m - 1)
+                    printf(" | ");
+            }
+            // Second line: prod' -> α1 prod' | α2 prod' | ... | ε
+            printf("\n%c' -> ", prod);
+            for(i = 0; i < n; i++) {
+                printf("%s %c'", alpha[i], prod); // alpha with prod'
+                if(i != n - 1)
+                    printf(" | ");
+            }
+            printf(" | ε\n"); // epsilon
+        } else {
+            // If no alpha, no left recursion, print as it is
+            printf("\nNo left recursion found in production.\n");
+            printf("Production: %c -> ", prod);
+            for(i = 0; i < m; i++) {
+                printf("%s", beta[i]);
+                if(i != m - 1)
+                    printf(" | ");
+            }
+            printf("\n");
+        }
+    }
+    return 0;
+}
