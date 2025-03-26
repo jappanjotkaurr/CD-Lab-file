@@ -1,0 +1,21 @@
+#include <stdio.h>
+int main() {
+    char str[100];
+    int i, isConstant = 1;
+    // Input string
+    printf("Enter a string: ");
+    scanf("%s", str);
+    // Check if all characters are the same
+    for (i = 1; str[i] != '\0'; i++) {
+        if (str[i] != str[0]) {
+            isConstant = 0; // Found a different character
+            break;
+        }
+    }
+    // Output result
+    if (isConstant)
+        printf("The string is constant.\n");
+    else
+        printf("The string is not constant.\n");
+    return 0;
+}
