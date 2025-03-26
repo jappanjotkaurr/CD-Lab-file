@@ -1,0 +1,48 @@
+#include <stdio.h>  
+int main() {
+    int r, c;  
+    int a[100][100], b[100][100], sum[100][100];  
+    int i, j;  
+    // Taking input for number of rows and columns
+    printf("Enter the number of rows: ");
+    scanf("%d", &r);
+    printf("Enter the number of columns: ");
+    scanf("%d", &c);
+
+    // Taking input for the first matrix
+    printf("\nEnter elements of 1st matrix:\n");
+    for (i = 0; i < r; ++i) {  
+        for (j = 0; j < c; ++j) {  
+            printf("Enter element a%d%d: ", i + 1, j + 1);
+            scanf("%d", &a[i][j]);  // Store input in matrix 'a'
+        }
+    }
+
+    // Taking input for the second matrix
+    printf("Enter elements of 2nd matrix:\n");
+    for (i = 0; i < r; ++i) {  
+        for (j = 0; j < c; ++j) {  
+            printf("Enter element b%d%d: ", i + 1, j + 1);
+            scanf("%d", &b[i][j]);  // Store input in matrix 'b'
+        }
+    }
+
+    // Performing matrix addition
+    for (i = 0; i < r; ++i) {
+        for (j = 0; j < c; ++j) {
+            sum[i][j] = a[i][j] + b[i][j];  // Add corresponding elements
+        }
+    }
+    // Displaying the resultant sum matrix
+    printf("\nSum of two matrices: \n");
+    for (i = 0; i < r; ++i) {
+        for (j = 0; j < c; ++j) {
+            printf("%d   ", sum[i][j]);  // Print each element
+            if (j == c - 1) {  // When last column is reached
+                printf("\n\n");  // Move to the next line for proper formatting
+            }
+        }
+    }
+
+    return 0;  
+}
